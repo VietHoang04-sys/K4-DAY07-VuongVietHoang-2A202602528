@@ -1,0 +1,105 @@
+﻿Chunker: HeadingChunker
+Embedding backend: mock embeddings fallback
+Loaded 57 chunks from 8 files
+
+=== Baseline: fixed/sentence/recursive/heading ===
+
+chunking_experiment_report:
+  fixed_size: count=5 avg_length=456.4
+  by_sentences: count=5 avg_length=454.6
+  recursive: count=6 avg_length=378.5
+  by_heading: count=7 avg_length=331.9
+
+return-refund-policy:
+  fixed_size: count=2 avg_length=314.5
+  by_sentences: count=2 avg_length=312.5
+  recursive: count=2 avg_length=313.0
+  by_heading: count=2 avg_length=313.0
+
+seller-warranty-policy:
+  fixed_size: count=2 avg_length=256.5
+  by_sentences: count=1 avg_length=510.0
+  recursive: count=2 avg_length=255.0
+  by_heading: count=2 avg_length=255.0
+
+rag_system_design:
+  fixed_size: count=6 avg_length=450.0
+  by_sentences: count=5 avg_length=537.8
+  recursive: count=8 avg_length=335.6
+  by_heading: count=9 avg_length=305.4
+
+request-return-refund:
+  fixed_size: count=6 avg_length=431.8
+  by_sentences: count=8 avg_length=320.8
+  recursive: count=7 avg_length=367.3
+  by_heading: count=11 avg_length=243.2
+
+return-refund-evidence-guide:
+  fixed_size: count=8 avg_length=474.4
+  by_sentences: count=10 avg_length=377.6
+  recursive: count=11 avg_length=343.3
+  by_heading: count=14 avg_length=275.6
+
+vector_store_notes:
+  fixed_size: count=5 avg_length=495.8
+  by_sentences: count=8 avg_length=308.1
+  recursive: count=7 avg_length=352.3
+  by_heading: count=7 avg_length=364.4
+
+vi_retrieval_notes:
+  fixed_size: count=4 avg_length=416.8
+  by_sentences: count=5 avg_length=331.6
+  recursive: count=5 avg_length=331.6
+  by_heading: count=5 avg_length=372.4
+
+=== Retrieval benchmark (top-3) ===
+
+[1] Người mua có thời hạn bao nhiêu ngày để gửi yêu cầu Trả hàng/Hoàn tiền đối với hàng thông thường và thực phẩm?
+filter={'audience': 'buyer'}
+gold=Chưa có đoạn trích tương ứng trong corpus hiện tại; cần bổ sung tài liệu chính sách có thời hạn cho hàng thông thường và thực phẩm.
+  1. score=0.2553 doc_id=return-refund-evidence-guide chunk_id=return-refund-evidence-guide#6
+     ## 3. Khiếu nại hàng giả hoặc hàng nhái Đối với khiếu nại nghi ngờ hàng giả/nhái, người mua cần cung cấp các bằng chứng đối chiếu xác thực sau:
+  2. score=0.1964 doc_id=request-return-refund chunk_id=request-return-refund#4
+     ### Cách 1: Gửi yêu cầu trực tiếp tại trang Đơn hàng - Mô tả rõ tình trạng hàng hóa thực tế. - Tải lên bằng chứng thể hiện tình trạng (hình ảnh sản phẩm, video quay lúc khui/mở hộp,...). - Cung cấp email liên hệ. - **Bước 8:** Nhấn **Gửi yê...
+  3. score=0.1533 doc_id=return-refund-evidence-guide chunk_id=return-refund-evidence-guide#11
+     ### Cách xử lý bằng chứng có dung lượng lớn - Nếu video hoặc hình ảnh vượt quá dung lượng quy định của hệ thống, bạn hãy tải tệp lên các nền tảng lưu trữ như **Google Drive** hoặc **YouTube** (thiết lập ở chế độ **Công khai/Bất kỳ ai có đườ...
+
+[2] Các bước gửi yêu cầu Trả hàng/Hoàn tiền trực tiếp từ trang đơn hàng trên ứng dụng Shopee?
+filter={'audience': 'buyer'}
+gold=Mở Shopee, vào Tôi, chọn Chờ giao hàng hoặc Đã giao, chọn Trả hàng/Hoàn tiền, chọn tình huống/sản phẩm/lý do, điền thông tin và nhấn Gửi yêu cầu.
+  1. score=0.2896 doc_id=return-refund-evidence-guide chunk_id=return-refund-evidence-guide#5
+     ### Lưu ý khi đóng gói hàng trả lại - Khi cần gửi trả hàng về cho Người bán, Shopee khuyến khích bạn quay lại **video đóng gói kiện hàng hoàn trả**. - Video hoàn trả cần đáp ứng các tiêu chuẩn: quay liên tục không ngắt quãng, thể hiện rõ tì...
+  2. score=0.2711 doc_id=return-refund-evidence-guide chunk_id=return-refund-evidence-guide#9
+     ## 4. Quy định chung về định dạng và thời hạn bổ sung bằng chứng
+  3. score=0.2050 doc_id=return-refund-evidence-guide chunk_id=return-refund-evidence-guide#6
+     ## 3. Khiếu nại hàng giả hoặc hàng nhái Đối với khiếu nại nghi ngờ hàng giả/nhái, người mua cần cung cấp các bằng chứng đối chiếu xác thực sau:
+
+[3] Video mở kiện hàng của Người mua cần đáp ứng tiêu chuẩn kỹ thuật và dung lượng nào?
+filter={'audience': 'buyer'}
+gold=Video cần quay liên tục, rõ nét, đủ sáng, không cắt ghép; tối đa 100 MB/video và dài không quá 1 phút.
+  1. score=0.2381 doc_id=return-refund-evidence-guide chunk_id=return-refund-evidence-guide#11
+     ### Cách xử lý bằng chứng có dung lượng lớn - Nếu video hoặc hình ảnh vượt quá dung lượng quy định của hệ thống, bạn hãy tải tệp lên các nền tảng lưu trữ như **Google Drive** hoặc **YouTube** (thiết lập ở chế độ **Công khai/Bất kỳ ai có đườ...
+  2. score=0.2270 doc_id=return-refund-evidence-guide chunk_id=return-refund-evidence-guide#4
+     ### Các nội dung bắt buộc phải thể hiện trong video - **Tình trạng ngoại quan:** Quay đủ **6 mặt của kiện hàng** trước khi mở để chứng minh tình trạng nguyên vẹn/móp méo khi nhận từ bưu tá. - **Thông tin đơn hàng:** Quay rõ **mã vận đơn** d...
+  3. score=0.1679 doc_id=request-return-refund chunk_id=request-return-refund#9
+     ### Thời gian và quy trình nhận tiền hoàn - Nếu yêu cầu được chấp nhận, tiền sẽ được hoàn trả trong khoảng **1 - 14 ngày làm việc**, tùy thuộc vào phương thức thanh toán ban đầu của đơn hàng.
+
+[4] Người mua có phải trả phí vận chuyển khi gửi hàng hoàn trả về cho Người bán không?
+filter={'audience': 'buyer'}
+gold=Cần đối chiếu section chính sách phí vận chuyển trong corpus; không suy đoán khi tài liệu hiện tại chưa nêu rõ mức phí.
+  1. score=0.1949 doc_id=request-return-refund chunk_id=request-return-refund#0
+     # [Trả hàng/ Hoàn tiền] Hướng dẫn gửi yêu cầu Trả hàng/ Hoàn tiền Khi cần yêu cầu trả hàng hoặc hoàn tiền trên Shopee, người mua có thể thực hiện theo một trong hai cách dưới đây.
+  2. score=0.1633 doc_id=return-refund-evidence-guide chunk_id=return-refund-evidence-guide#11
+     ### Cách xử lý bằng chứng có dung lượng lớn - Nếu video hoặc hình ảnh vượt quá dung lượng quy định của hệ thống, bạn hãy tải tệp lên các nền tảng lưu trữ như **Google Drive** hoặc **YouTube** (thiết lập ở chế độ **Công khai/Bất kỳ ai có đườ...
+  3. score=0.1386 doc_id=return-refund-evidence-guide chunk_id=return-refund-evidence-guide#9
+     ## 4. Quy định chung về định dạng và thời hạn bổ sung bằng chứng
+
+[5] Thời gian xử lý yêu cầu Trả hàng / Hoàn tiền là bao lâu?
+filter={'audience': 'buyer'}
+gold=Yêu cầu thường được Shopee xử lý trong khoảng 3 - 5 ngày làm việc; nếu được chấp nhận, tiền hoàn trong khoảng 1 - 14 ngày làm việc.
+  1. score=0.2094 doc_id=return-refund-evidence-guide chunk_id=return-refund-evidence-guide#8
+     ## 3. Khiếu nại hàng giả hoặc hàng nhái | **So sánh chi tiết sản phẩm** | Chụp ảnh hoặc quay video cận cảnh đối chiếu sự khác biệt giữa sản phẩm nhận được và sản phẩm chính hãng (về logo, màu sắc, chất liệu, độ hoàn thiện, mã sản phẩm, tem ...
+  2. score=0.2085 doc_id=return-refund-policy chunk_id=return-refund-policy#0
+     > Khối metadata phía trên là **template mẫu** cho K4-L3B (bắt buộc: `audience` + `source_url` + `retrieved_at` + `document_version`, cùng ít nhất một trường hữu ích khác như `category`). Thay bằng nguồn công khai thật của nhóm trước khi dùn...
+  3. score=0.2018 doc_id=return-refund-evidence-guide chunk_id=return-refund-evidence-guide#12
+     ### Tiêu chuẩn chất lượng và bằng chứng bổ sung - Mọi hình ảnh, video phải được chụp/quay cận cảnh chỗ bị lỗi, rõ nét, không bị rung mờ. - Khuyến khích đính kèm ảnh chụp màn hình lịch sử trao đổi/thương lượng với Người bán để làm cơ sở cho ...

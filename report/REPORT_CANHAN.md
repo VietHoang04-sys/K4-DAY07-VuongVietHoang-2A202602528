@@ -111,25 +111,26 @@ EmbeddingStore, metadata filtering, document deletion và KnowledgeBaseAgent.
 
 Chạy **5 câu hỏi đánh giá của nhóm** trên mã nguồn cá nhân của bạn trong gói `src`. **5 câu hỏi này phải trùng với các thành viên cùng nhóm** (xem `REPORT_NHOM.md`).
 
-Do chưa có log benchmark chung của nhóm, bảng dưới đây là **đánh giá kỹ thuật dự kiến**
-dựa trên đặc tính của Heading & Section chunking. Score được ghi theo mức định tính
-thay vì bịa ra điểm số từ `MockEmbedder` (vốn chỉ sinh vector giả lập, không phản ánh
-đầy đủ ngữ nghĩa).
+Bảng dưới đây là kết quả chạy thực tế bằng `python bench.py --baseline` trên 8 file
+Markdown, 57 chunks, với `HeadingChunker(chunk_size=500)` và `MockEmbedder`.
+Toàn bộ output được lưu tại `ket_qua_benchmark.txt`. Vì `MockEmbedder` sinh vector
+giả lập từ MD5, score phản ánh thứ hạng của lần chạy này chứ chưa đại diện đầy đủ
+cho chất lượng ngữ nghĩa của embedding model thật.
 
 | # | Câu hỏi (Query) | Top-1 Chunk truy xuất được (tóm tắt) | Điểm Score | Có liên quan không? (Relevant) | Câu trả lời của Agent (tóm tắt) |
 |---|-------|--------------------------------|-------|-----------|------------------------|
-| 1 | Điều kiện để được hoàn tiền là gì? | Section chứa heading về điều kiện hoàn tiền và toàn bộ các điều khoản liên quan | Cao | Có; section giữ trọn ngữ cảnh và dễ truy vết | Trả lời được điều kiện, kèm nguồn section |
-| 2 | Quy trình gửi yêu cầu đổi trả gồm những bước nào? | Section quy định quy trình, thường chứa các bước theo đúng thứ tự | Cao | Có; ranh giới section phù hợp với câu hỏi quy trình | Liệt kê các bước từ chunk liên quan |
-| 3 | Chính sách áp dụng cho người mua hay người bán? | Section có metadata/source hoặc heading xác định đối tượng áp dụng | Khá cao | Có nếu metadata được lọc đúng; nếu không có thể lẫn tài liệu | Trả lời theo đúng audience và trích dẫn chunk |
-| 4 | Thời hạn xử lý yêu cầu là bao lâu? | Section về thời hạn xử lý; thông tin thường nằm trong cùng một mục | Khá cao | Có; heading giúp phân biệt thời hạn xử lý với điều kiện yêu cầu | Nêu thời hạn, không trộn với section khác |
-| 5 | Một section dài hơn `chunk_size` được xử lý thế nào? | Các chunk con cùng lặp lại heading của section dài | Cao | Có; heading được giữ lại trong mọi chunk con | Giải thích recursive fallback và việc giữ heading |
+| 1 | Người mua có thời hạn bao nhiêu ngày để gửi yêu cầu Trả hàng/Hoàn tiền đối với hàng thông thường và thực phẩm? | Top-1 `return-refund-evidence-guide#6`, score `0.2553`; nói về hàng giả/nhái, không có thời hạn được hỏi | 0.2553 | Không; corpus thiếu dữ liệu về hai nhóm hàng | Không nên suy đoán; cần bổ sung tài liệu chính sách |
+| 2 | Các bước gửi yêu cầu Trả hàng/Hoàn tiền trực tiếp từ trang đơn hàng trên ứng dụng Shopee? | Top-1 `return-refund-evidence-guide#5`, score `0.2896`; nói về đóng gói hàng trả lại | 0.2896 | Không trong top-3; chunk đúng không được xếp hạng đủ cao | Retrieval bị lệch do MockEmbedder |
+| 3 | Video mở kiện hàng của Người mua cần đáp ứng tiêu chuẩn kỹ thuật và dung lượng nào? | Top-1 `return-refund-evidence-guide#11`, score `0.2381`; chứa quy định dung lượng/tệp tin | 0.2381 | Có; top-3 có nội dung liên quan | Tối đa 100 MB/video, không quá 1 phút, quay rõ và liên tục |
+| 4 | Người mua có phải trả phí vận chuyển khi gửi hàng hoàn trả về cho Người bán không? | Top-1 `request-return-refund#0`, score `0.1949`; không nêu rõ chính sách phí | 0.1949 | Không; corpus chưa có câu trả lời rõ ràng | Không nên suy đoán khi thiếu section phí vận chuyển |
+| 5 | Thời gian xử lý yêu cầu Trả hàng / Hoàn tiền là bao lâu? | Top-1 `return-refund-evidence-guide#8`, score `0.2094`; không chứa mốc xử lý | 0.2094 | Không trong top-3; thông tin đúng nằm ở `request-return-refund#9` | Retrieval miss dù tài liệu có câu trả lời |
 
-**Bao nhiêu câu hỏi trả về chunk có liên quan trong top-3?** **Dự kiến 5 / 5**
-với tài liệu có heading rõ ràng và metadata được gán đúng. Đây là dự đoán kỹ thuật,
-cần xác nhận lại bằng 5 query chính thức của nhóm.
+**Bao nhiêu câu hỏi trả về chunk có liên quan trong top-3?** **1 / 5**.
+Query số 3 có chunk liên quan trong top-3. Query số 1 và số 4 chưa có dữ liệu trả lời
+trong corpus; query số 2 và số 5 có dữ liệu nhưng bị MockEmbedder xếp hạng thấp.
 
 **Điều hay nhất tôi học được từ thành viên khác / nhóm khác (qua demo):**
-> Qua phần triển khai Heading & Section chunking, tôi nhận thấy ranh giới do người biên soạn tạo ra thường có ý nghĩa tốt hơn ranh giới cắt theo số ký tự. Việc giữ lại heading trong mọi chunk con đặc biệt quan trọng vì giúp retrieval và LLM biết chunk đang thuộc điều khoản nào. Tuy nhiên section quá dài vẫn cần recursive fallback để tránh vượt giới hạn embedding. Điểm yếu là các query hỏi xuyên nhiều section hoặc tài liệu không có heading rõ ràng có thể cần RecursiveChunker hoặc overlap để bổ sung ngữ cảnh.
+> Kết quả benchmark cho thấy HeadingChunker giữ được các section có cấu trúc tốt, nhưng chunking đúng không tự bảo đảm retrieval đúng. Với MockEmbedder, query quy trình và thời gian xử lý vẫn bỏ lỡ chunk chứa đáp án; vì vậy cần embedding có ngữ nghĩa, query expansion hoặc reranking. Corpus cũng cần bổ sung đầy đủ section về thời hạn theo loại hàng và phí vận chuyển.
 
 ---
 
@@ -141,5 +142,5 @@ cần xác nhận lại bằng 5 query chính thức của nhóm.
 | Hướng tiếp cận của tôi (My Approach) | 10 / 10 |
 | Hoàn thiện code (Core Implementation — tests) | 30 / 30 |
 | Dự đoán độ tương tự (Similarity Predictions) | 4 / 5 |
-| Kết quả truy xuất của tôi (Competition Results) | 8 / 10 |
-| **Tổng phần cá nhân** | **57 / 60 ** |
+| Kết quả truy xuất của tôi (Competition Results) | 5 / 10 (1/5 câu có chunk liên quan trong top-3) |
+| **Tổng phần cá nhân** | **54 / 60** |
