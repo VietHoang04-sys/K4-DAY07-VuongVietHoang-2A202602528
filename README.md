@@ -193,7 +193,7 @@ PY
 - `SentenceChunker` — chia nhỏ theo ranh giới câu
 - `RecursiveChunker` — thử nghiệm từng dấu phân cách theo thứ tự
 - `compute_similarity` — tính độ tương tự cosine
-- `ChunkingStrategyComparator` — so sánh 3 chiến lược
+- `ChunkingStrategyComparator` — so sánh các chiến lược fixed-size, sentence, recursive và heading/section
 - `EmbeddingStore` — lớp bao bọc (wrapper) cho kho lưu trữ vector (gồm 5 phương thức)
 - `KnowledgeBaseAgent` — tác tử theo mô hình RAG
 

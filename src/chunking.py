@@ -216,6 +216,7 @@ class ChunkingStrategyComparator:
             "fixed_size": FixedSizeChunker(chunk_size=chunk_size, overlap=0),
             "by_sentences": SentenceChunker(),
             "recursive": RecursiveChunker(chunk_size=chunk_size),
+            "by_heading": HeadingChunker(chunk_size=chunk_size),
         }
         comparison = {}
         for name, chunker in strategies.items():
