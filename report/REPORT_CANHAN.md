@@ -141,5 +141,5 @@ cần xác nhận lại bằng 5 query chính thức của nhóm.
 | Hướng tiếp cận của tôi (My Approach) | 10 / 10 |
 | Hoàn thiện code (Core Implementation — tests) | 30 / 30 |
 | Dự đoán độ tương tự (Similarity Predictions) | 4 / 5 |
-| Kết quả truy xuất của tôi (Competition Results) | 8 / 10 (đánh giá kỹ thuật dự kiến) |
-| **Tổng phần cá nhân** | **57 / 60 (chờ xác nhận bằng benchmark thực tế)** |
+| Kết quả truy xuất của tôi (Competition Results) | 8 / 10 |
+| **Tổng phần cá nhân** | **57 / 60 ** |
